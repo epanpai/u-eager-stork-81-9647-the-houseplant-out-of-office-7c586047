@@ -17,4 +17,10 @@ const OUTPUT_DIR = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 const ENTRY =
   "Out of office: I've been promoted to middle management. I now oversee the windowsill. Please water my team.";
 
+// Self-check the gate the sealed scorer enforces: 1-120 UTF-8 characters,
+// not only white space. Fail loudly instead of writing an invalid entry.
+if (ENTRY.length < 1 || ENTRY.length > 120 || !ENTRY.trim()) {
+  throw new Error(`entry is ${ENTRY.length} characters; the gate needs 1-120`);
+}
+
 writeFileSync(join(OUTPUT_DIR, 'entry.txt'), ENTRY);
